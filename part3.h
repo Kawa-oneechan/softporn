@@ -140,7 +140,7 @@ void initNewGame()
 		giveHelp();
 	else
 		puts("");
-	
+
 	memset((void*)&state, 0, sizeof(gameState));
 
 	int i;
@@ -305,7 +305,7 @@ char* trimWhiteSpace(char* str)
 		else
 			break;
 	}
-	
+
 	strcpy(str, str + startSpaces);
 
 	if (*str == 0)
@@ -524,9 +524,8 @@ void readAndParseCommand()
 
 		char command[256];
 		strcpy(command, lineFromKbd);
-		//expandAbbreviations(command);
-		//splitUpInVerbAndNoun(command);
-		parse(command);
+		expandAbbreviations(command);
+		splitUpInVerbAndNoun(command);
 
 		commandOK = strlen(parserVerb) > 0;
 

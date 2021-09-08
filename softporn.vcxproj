@@ -142,7 +142,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="agiparse.cpp" />
     <ClCompile Include="wincon.cpp" />
     <ClCompile Include="softporn.cpp" />
     <ClInclude Include="metrics.h" />

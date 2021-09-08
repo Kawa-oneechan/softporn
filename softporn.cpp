@@ -46,8 +46,6 @@ void writeLongMessage(int msg, bool wrap = true)
 
 int main()
 {
-	parse("dance, with girl");
-
 	setWindowSize();
 	initNewGame();
 
