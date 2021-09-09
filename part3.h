@@ -491,8 +491,6 @@ doneGlue:
 	}
 }
 
-extern void parse(char* str);
-
 void readAndParseCommand()
 {
 	bool commandOK = false;
