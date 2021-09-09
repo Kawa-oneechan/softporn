@@ -329,171 +329,87 @@ char* trimWhiteSpace(char* str)
 	return str;
 }
 
-void expandAbbreviations(char* str)
+extern void parse(char*);
+extern int results[];
+bool agiParse(char* str)
 {
 	for (unsigned int i = 0; i < strlen(str); i++)
-		str[i] = (char)toupper(str[i]);
+		str[i] = (char)tolower(str[i]);
 
-	if (!strcmp(str, "INVE"))
-		strcpy(str, "I");
 	if (strlen(str) == 1)
 	{
 		switch (str[0])
 		{
-		case 'I': strcpy(str, "TAKE INVE"); break;
-		case 'N': strcpy(str, "GO NORT"); break;
-		case 'S': strcpy(str, "GO SOUT"); break;
-		case 'E': strcpy(str, "GO EAST"); break;
-		case 'W': strcpy(str, "GO WEST"); break;
-		case 'U': strcpy(str, "GO UP"); break;
-		case 'D': strcpy(str, "GO DOWN"); break;
-		case 'L': strcpy(str, "LOOK"); break;
+		case 'i': strcpy(str, "take inventory"); break;
+		case 'n': strcpy(str, "north"); break;
+		case 's': strcpy(str, "s"); break;
+		case 'e': strcpy(str, "east"); break;
+		case 'w': strcpy(str, "west"); break;
+		case 'u': strcpy(str, "up"); break;
+		case 'd': strcpy(str, "down"); break;
 		}
 	}
-}
 
-void splitUpInVerbAndNoun(char* str)
-{
-	strcpy(parserVerb, "    ");
-	strcpy(parserNoun, "    ");
-	strcpy(fullVerb, "");
-	strcpy(fullNoun, "");
+	parse(str);
 
-	char firstWord[24] = { 0 };
-	char secondWord[24] = { 0 };
-	char thisWord[24] = { 0 };
-	char *space;
-	char *space2;
-	int i;
-
-	strcpy(firstWord, str);
-findGlue:
-	space = strchr(str, ' ');
-	if (space != NULL)
+	if (results[0] == -1)
 	{
-		*space = '\0';
-		strcpy(secondWord, space + 1); //secondWord = space + 1;
-		if (secondWord[0] == '5' && secondWord[1] == '5' && secondWord[2] == '5')
-			strcpy(secondWord, secondWord + 4);
-	}
-	else
-		goto doneGlue;
-	//char thisWord[5] = { secondWord[0], secondWord[1], secondWord[2], secondWord[3], 0 };
-	thisWord[0] = secondWord[0];
-	thisWord[1] = secondWord[1];
-	thisWord[2] = secondWord[2];
-	thisWord[3] = secondWord[3];
-	thisWord[0] = 0;
-	space2 = strchr(thisWord, ' ');
-	if (space2 != NULL)
-		*space2 = '\0';
-	for (i = 0; i < 9; i++)
-	{
-		if (!strcmp(thisWord, glueWords[i]))
-		{
-			space = strchr(secondWord, ' ');
-			if (space != NULL)
-			{
-				*space = '\0';
-				strcpy(secondWord, space + 1); //secondWord = space + 1;
-			}
-			goto findGlue;
-		}
-	}
-doneGlue:
-	if (secondWord[0] != 0)
-	{
-		space = strchr(secondWord, ' ');
-		if (space != NULL)
-			*space = '\0';
+		puts("I didn't catch that.");
+		return false;
 	}
 
-	space = strchr(firstWord, ' ');
-	if (space != NULL)
-		*space = '\0';
+	if (results[0] == 2) //taek
+	{
+		puts("Learn to spell, numbnut!");
+		return false;
+	}
+	else if (results[1] == 3) //lady
+	{
+		puts("That's no lady, that's my sister!");
+		return false;
+	}
 
-	//we should now have a noun and maybe a verb, now to identify them.
+	if (results[0] == 264)
+	{
+		//take inventory
+		results[0] = 302;
+		results[1] = 264;
+	}
+	else if (results[0] >= 100 && results[0] <= 199)
+	{
+		//go _____
+		results[1] = results[0];
+		results[0] = 300;
+	}
 
 	haveNoVerb = true;
 	haveNoObject = true;
 	haveNoDirection = true;
 
-	strcpy(fullVerb, firstWord);
-
-	if (strlen(firstWord) > 4)
-		firstWord[4] = '\0';
-
-	strcpy(parserVerb, firstWord);
-
-	if      (!strcmp(firstWord, "GET" )) strcpy(firstWord, "TAKE");
-	else if (!strcmp(firstWord, "GRAB")) strcpy(firstWord, "TAKE");
-	else if (!strcmp(firstWord, "LEAV")) strcpy(firstWord, "DROP");
-	else if (!strcmp(firstWord, "PLAN")) strcpy(firstWord, "DROP");
-	else if (!strcmp(firstWord, "GIVE")) strcpy(firstWord, "DROP");
-	else if (!strcmp(firstWord, "SEAR")) strcpy(firstWord, "LOOK");
-	else if (!strcmp(firstWord, "EXAM")) strcpy(firstWord, "LOOK");
-	else if (!strcmp(firstWord, "READ")) strcpy(firstWord, "LOOK");
-	else if (!strcmp(firstWord, "WATC")) strcpy(firstWord, "LOOK");
-	else if (!strcmp(firstWord, "PULL")) strcpy(firstWord, "OPEN");
-	else if (!strcmp(firstWord, "PUSH")) strcpy(firstWord, "PRES");
-	else if (!strcmp(firstWord, "ORDE")) strcpy(firstWord, "BUY" );
-	else if (!strcmp(firstWord, "SEDU")) strcpy(firstWord, "FUCK");
-	else if (!strcmp(firstWord, "RAPE")) strcpy(firstWord, "FUCK");
-	else if (!strcmp(firstWord, "SCRE")) strcpy(firstWord, "FUCK");
-	else if (!strcmp(firstWord, "USE" )) strcpy(firstWord, "WEAR");
-	else if (!strcmp(firstWord, "DIAL")) strcpy(firstWord, "CALL");
-	else if (!strcmp(firstWord, "SMAS")) strcpy(firstWord, "BREA");
-	else if (!strcmp(firstWord, "LOAD")) strcpy(firstWord, "REST");
-	else if (!strcmp(firstWord, "STOP")) strcpy(firstWord, "QUIT");
-	else if (!strcmp(firstWord, "BYE" )) strcpy(firstWord, "QUIT");
-
-	for (i = 0; i < 48; i++)
+	if (results[0] >= 300 && results[0] <= 399)
 	{
-		if (!strcmp(firstWord, verbNames[i]))
-		{
-			state.verb = (verbs)i;
-			haveNoVerb = false;
-			break;
-		}
+		haveNoVerb = false;
+		state.verb = (verbs)(results[0] - 300);
+	}
+	if (results[1] >= 200 && results[1] <= 299)
+	{
+		haveNoObject = false;
+		state.noun = (objects)(results[1] - 200);
+	}
+	if (haveNoObject && results[1] >= 100 && results[1] <= 199)
+	{
+		haveNoDirection = false;
+		state.direction = (directions)(results[1] - 100);
 	}
 
-	haveVerbOnly = !haveNoVerb && secondWord[0] == 0;
-
-	if (secondWord[0] != 0)
-	{
-		strcpy(fullNoun, secondWord);
-
-		if (strlen(secondWord) > 4)
-			secondWord[4] = '\0';
-
-		strcpy(parserNoun, secondWord);
-
-		for (int i = 0; i < 70; i++)
-		{
-			if (!strcmp(secondWord, objNames[i]))
-			{
-				state.noun = (objects)i;
-				haveNoObject = false;
-				break;
-			}
-		}
-
-		if (haveNoObject)
-			for (int i = 0; i < 6; i++)
-			{
-				if (!strcmp(secondWord, dirNames[i]))
-				{
-					state.direction = (directions)i;
-					haveNoDirection = false;
-					break;
-				}
-			}
-	}
+	haveVerbOnly = !haveNoVerb && (haveNoObject && haveNoDirection);
+	return true;
 }
 
 void readAndParseCommand()
 {
 	bool commandOK = false;
+	places prevPlace = (places)-1;
 	char score[40];
 	sprintf(score, "Score: %d/3", state.score);
 
@@ -501,7 +417,9 @@ void readAndParseCommand()
 	{
 		do
 		{
-			lookAround();
+			if (state.yourPlace != prevPlace)
+				lookAround();
+			prevPlace = state.yourPlace;
 
 			do
 			{
@@ -522,22 +440,7 @@ void readAndParseCommand()
 
 		char command[256];
 		strcpy(command, lineFromKbd);
-		expandAbbreviations(command);
-		splitUpInVerbAndNoun(command);
-
-		commandOK = strlen(parserVerb) > 0;
-
-		if (!strcmp(parserNoun, "LADY"))
-		{
-			puts("That's no lady, that's my sister!");
-			commandOK = false;
-		}
-		//else if say
-		else if (!strcmp(parserVerb, "TKAE") || !strcmp(parserVerb, "TAEK"))
-		{
-			puts("Learn to spell, numbnut!");
-			commandOK = false;
-		}
+		commandOK = agiParse(command);
 
 	} while (!commandOK);
 }
