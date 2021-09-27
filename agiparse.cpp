@@ -12,7 +12,21 @@ int dictSize = 0;
 
 void loadDict()
 {
-	FILE *f = fopen("words.tok", "rb+");
+	FILE *f = NULL;
+#ifdef HAVESAFE
+	if (fopen_s(&f, "words.tok", "rb+"))
+	{
+		printf("Couldn't open dictionary.\n");
+		return;
+	}
+#else
+	f = fopen("words.tok", "rb+");
+#endif
+	if (f == NULL)
+	{
+		printf("Couldn't open dictionary.\n");
+		return;
+	}
 	fseek(f, 1, SEEK_END);
 	dictSize = ftell(f);
 	fseek(f, 0, SEEK_SET);
