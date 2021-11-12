@@ -2,7 +2,7 @@
 
 void putw(const char* str)
 {
-	int l = strlen(str);
+	int l = (int)strlen(str);
 	if (l < COLS)
 	{
 		puts(str);

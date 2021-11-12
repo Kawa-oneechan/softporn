@@ -82,7 +82,7 @@ void writeHeader(int line, const char* leftText, const char* rightText)
 	}
 	if (rightText != NULL)
 	{
-		setPos(COLS - 1 - strlen(rightText), 0);
+		setPos(COLS - 1 - (int)strlen(rightText), 0);
 		puts(rightText);
 	}
 	SetConsoleTextAttribute(console, REGULARCOLOR);

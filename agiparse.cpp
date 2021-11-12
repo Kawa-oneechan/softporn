@@ -45,7 +45,7 @@ void parse(char* input)
 	int numRes = 0;
 
 	int cursor = 0;
-	int inputLen = strlen(input);
+	int inputLen = (int)strlen(input);
 	while (cursor < inputLen)
 	{
 		if (isblank(input[cursor]) || ispunct(input[cursor]))
@@ -96,7 +96,7 @@ void parse(char* input)
 			{
 				numRes = 0;
 				results[0] = -1;
-				cursor += strlen(thisWord);
+				cursor += (int)strlen(thisWord);
 				break;
 			}
 			*prefixedWord = 0;
@@ -104,7 +104,7 @@ void parse(char* input)
 			int b = (unsigned char)dict[i++];
 			id = (a << 8) | b;
 		
-			int wordLen = strlen(thisWord);
+			int wordLen = (int)strlen(thisWord);
 			if (!strncmp(here, thisWord, wordLen))
 			{
 				results[numRes++] = id;
