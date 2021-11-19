@@ -11,15 +11,15 @@ void setWindowSize()
 	CONSOLE_SCREEN_BUFFER_INFO bufferInfo;
 	GetConsoleScreenBufferInfo(h, &bufferInfo);
 	SMALL_RECT& winInfo = bufferInfo.srWindow;
-	COORD windowSize = { winInfo.Right - winInfo.Left + 1, winInfo.Bottom - winInfo.Top + 1 };
+	COORD windowSize = { (SHORT)(winInfo.Right - winInfo.Left + 1), (SHORT)(winInfo.Bottom - winInfo.Top + 1) };
 	if (windowSize.X > COLS || windowSize.Y > ROWS)
 	{
 		SMALL_RECT info =
 		{
 			0,
 			0,
-			COLS < windowSize.X ? COLS - 1 : windowSize.X - 1,
-			ROWS < windowSize.Y ? ROWS - 1 : windowSize.Y - 1
+			(SHORT)(COLS < windowSize.X ? COLS - 1 : windowSize.X - 1),
+			(SHORT)(ROWS < windowSize.Y ? ROWS - 1 : windowSize.Y - 1)
 		};
 		SetConsoleWindowInfo(h, TRUE, &info);
 	}
