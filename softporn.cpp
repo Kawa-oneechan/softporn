@@ -44,8 +44,19 @@ void writeLongMessage(int msg, bool wrap = true)
 #include "part3.h"
 #include "parts456.h"
 
+extern void loadDict();
+extern char *dict;
+
 int main()
 {
+	loadDict();
+	if (dict == NULL)
+	{
+		puts("Is \"words.tok\" there?");
+		getKey();
+		return -1;
+	}
+
 	setWindowSize();
 	initNewGame();
 
