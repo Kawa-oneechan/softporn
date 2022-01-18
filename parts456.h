@@ -1619,18 +1619,19 @@ void PartsFourToSix()
 	}
 	case save:
 	{
-		if (fullNoun[1] != 0 || (fullNoun[0] < '0' && fullNoun[0] > '9'))
+		int slot = 0;
+		puts("Save to which slot? (0-9)");
+		while (true)
 		{
-			if (fullNoun[0] == 0)
-				fullNoun[0] = '0';
-			else
+			char resp = getKeySilent();
+			if (resp >= '0' && resp <= '9')
 			{
-				puts("That's not a valid save slot.");
+				slot = resp - '0';
 				break;
 			}
 		}
 		char fileName[24] = "SOFTP-#.SAV";
-		fileName[6] = fullNoun[0];
+		fileName[6] = '0' + slot;
 #ifdef HAVESAFE
 		FILE *f = NULL;
 		if (fopen_s(&f, fileName, "wb+"))
@@ -1649,18 +1650,19 @@ void PartsFourToSix()
 	}
 	case restore: //load
 	{
-		if (fullNoun[1] != 0 || (fullNoun[0] < '0' && fullNoun[0] > '9'))
+		int slot = 0;
+		puts("Restore from which slot? (0-9)");
+		while (true)
 		{
-			if (fullNoun[0] == 0)
-				fullNoun[0] = '0';
-			else
+			char resp = getKeySilent();
+			if (resp >= '0' && resp <= '9')
 			{
-				puts("That's not a valid save slot.");
+				slot = resp - '0';
 				break;
 			}
 		}
 		char fileName[24] = "SOFTP-#.SAV";
-		fileName[6] = fullNoun[0];
+		fileName[6] = '0' + slot;
 #ifdef HAVESAFE
 		FILE *f = NULL;
 		if (fopen_s(&f, fileName, "rb+"))

@@ -14,6 +14,7 @@ extern void setColor(int color);
 extern void writeHeader(int line, const char* leftText, const char* rightText);
 extern void delay(int ms);
 extern char getKey();
+extern char getKeySilent();
 extern char getOneOf(char key1, char key2, char key3);
 extern char* getString(char* buffer, int max);
 

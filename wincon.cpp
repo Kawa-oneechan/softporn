@@ -101,6 +101,12 @@ char getKey()
 	return answer;
 }
 
+char getKeySilent()
+{
+	char answer = (char)toupper(_getch());
+	return answer;
+}
+
 char getOneOf(char key1, char key2, char key3)
 {
 	key1 = (char)toupper(key1);
