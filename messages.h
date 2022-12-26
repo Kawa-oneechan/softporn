@@ -190,7 +190,7 @@ const char* const messages[] =
 	"presents. Dancing won't hurt either. And wine is always good to get thing\n"
 	"moving!\"\n\n"
 	"(Kawa would like to interrupt that this kind of article is absolute garbage\n"
-	"amd should not be taken as serious advice to apply in real life. Play on.)",
+	"and should not be taken as serious advice to apply in real life. Play on.)",
 
 	//34
 	"Cute and innocent! Just the way I like my women. Oh, this girl is great! She\n"
