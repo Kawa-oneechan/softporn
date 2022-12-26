@@ -187,7 +187,7 @@ const char* const messages[] =
 	//33
 	"Hmmmm. An interesting magazine with a nice centerfold! The feature article is\n"
 	"about how to pick up an innocent girl at a disco. It says, \"Shower her with\n"
-	"presents. Dancing won't hurt either. And wine is always good to get thing\n"
+	"presents. Dancing won't hurt either. And wine is always good to get things\n"
 	"moving!\"\n\n"
 	"(Kawa would like to interrupt that this kind of article is absolute garbage\n"
 	"and should not be taken as serious advice to apply in real life. Play on.)",
