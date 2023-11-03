@@ -31,6 +31,11 @@ void loadDict()
 	dictSize = ftell(f);
 	fseek(f, 0, SEEK_SET);
 	dict = (char*)malloc(dictSize);
+	if (dict == NULL)
+	{
+		printf("Couldn't allocate dictionary.\n");
+		return;
+	}
 	fread(dict, dictSize, 1, f);
 	fclose(f);
 }
@@ -56,7 +61,7 @@ void parse(char* input)
 		auto id = -1; //unknown word;
 		if ((firstCh >= 'a' && firstCh <= 'z'))
 		{
-			if ((cursor + 1 < inputLen) && (input[cursor + 1] == ' ' || cursor >= inputLen))
+			if ((cursor + 1 < inputLen) && (cursor >= inputLen || input[cursor + 1] == ' '))
 			{
 				//current word is one letter?
 				if (firstCh == 'a' || firstCh == 'i')

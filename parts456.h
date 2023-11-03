@@ -631,6 +631,7 @@ void PartsFourToSix()
 				else
 					puts("I don't have it!");
 			}
+			break;
 		}
 		case curtain:
 		{
@@ -653,6 +654,7 @@ void PartsFourToSix()
 				_open(&state.cabinetOpen);
 			else
 				puts("I can't reach it.");
+			break;
 		}
 		default:
 		{
@@ -1090,6 +1092,7 @@ void PartsFourToSix()
 		{
 			_close(&state.doorWestOpen);
 			state.path[dEntrance][west] = nowhere;
+			break;
 		}
 		default:
 		{

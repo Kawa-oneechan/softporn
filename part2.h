@@ -104,7 +104,7 @@ ask:
 		puts("Guess I'll die.");
 		delay(200);
 	}
-	else if (door == 0)
+	else //if (door == 0)
 	{
 		puts("\"Congratulations, you get another shot! See you soon!\"");
 		delay(200);
@@ -255,8 +255,8 @@ void dealCard(int* y, int* z, int* ac, char** card)
 	*ac = 0;
 	*card = (char*)cardNames[*z - 1];
 	if (*z > 10) *z = 10;
-	if (*z == 1) *z = 11;
-	if (*z == 0) *y = 1;
+	else if (*z == 1) *z = 11;
+	else *y = 1;
 	if (*z == 11) *ac = 1;
 }
 
@@ -313,14 +313,14 @@ void checkHit(int* mi, int* md, int* yd, int* ym, int* ad, int* am, int* a, int*
 	{
 		delay(200);
 		puts("You got a ***BLACKJACK***");
-		*money += *dollars + *dollars;
+		*money += *dollars * 2;
 		*gameOver = true;
 	}
 	else if (*yd == 2 && (*md == 21))
 	{
 		delay(200);
 		puts("The dealer has a ***BLACKJACK***");
-		*money += *dollars - *dollars;
+		*money -= *dollars;
 		*gameOver = true;
 	}
 	else

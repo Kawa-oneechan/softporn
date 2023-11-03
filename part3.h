@@ -83,6 +83,7 @@ void noMoney()
 
 bool objectIsHere(objects object)
 {
+	if (object >= noObject) return false;
 	return state.objectPlace[object] == state.yourPlace;
 }
 
@@ -298,7 +299,8 @@ char* trimWhiteSpace(char* str)
 
 	int startSpaces = 0;
 	unsigned int i;
-	for (i = 0; i < strlen(str); i++)
+	int len = strlen(str);
+	for (i = 0; i < len; i++)
 	{
 		if (isspace(str[i]))
 			startSpaces++;
@@ -316,7 +318,8 @@ char* trimWhiteSpace(char* str)
 
 	end[1] = '\0';
 
-	for (i = 1; i < strlen(str); i++)
+	len = strlen(str);
+	for (i = 1; i < len; i++)
 	{
 		while (isspace(str[i]) && isspace(str[i - 1]))
 		{
@@ -411,6 +414,7 @@ void readAndParseCommand()
 	bool commandOK = false;
 	places prevPlace = (places)-1;
 	char score[40];
+	int len;
 	sprintf(score, "Score: %d/3", state.score);
 
 	do
@@ -426,19 +430,20 @@ void readAndParseCommand()
 				writeHeader(0, placeHeaders[state.yourPlace], score);
 				putchar('>');
 				getString(lineFromKbd, 256);
-				if (strlen(lineFromKbd) == 0)
+				if (lineFromKbd[0] == '\0')
 					puts("Beg your pardon?");
-			} while (strlen(lineFromKbd) == 0);
+			} while (lineFromKbd[0] == '\0');
 
-			for (unsigned int i = 0; i < strlen(lineFromKbd); i++)
+			len = strlen(lineFromKbd);
+			for (unsigned int i = 0; i < len; i++)
 			{
 				if (ispunct(lineFromKbd[i]))
 					lineFromKbd[i] = ' ';
 				trimWhiteSpace(lineFromKbd);
 			}
-		} while (strlen(lineFromKbd) == 0);
+		} while (lineFromKbd[0] == '\0');
 
-		char command[256];
+		char command[257];
 		strcpy(command, lineFromKbd);
 		commandOK = agiParse(command);
 
